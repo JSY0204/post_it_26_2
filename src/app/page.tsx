@@ -372,8 +372,8 @@ export default function Home() {
       </main>
 
       {/* 푸터 */}
-      <footer className="w-full py-6 border-t border-neutral-200 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600 flex items-center justify-center gap-2">
-        <span>Post-it Todo List &bull; Next.js 16</span>
+      <footer className="w-full py-6 border-t border-neutral-200 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+        <span>Copyright INU Post-it Todo List by Sungyoon Jung</span>
         {scriptUrl && (
           <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
             &bull; <CheckCircle2 className="w-3.5 h-3.5" /> 구글 시트 연동 활성화됨
