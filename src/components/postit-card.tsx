@@ -177,7 +177,7 @@ export function PostItCard({ item, onDelete, onUpdate, onToggleComplete }: PostI
           <p
             className={`text-sm whitespace-pre-wrap leading-relaxed font-sans break-words transition-all ${
               isCompleted
-                ? "line-through text-neutral-500 opacity-75 font-normal"
+                ? "text-neutral-700 font-medium"
                 : "text-neutral-900 font-medium"
             }`}
           >
