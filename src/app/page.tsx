@@ -40,6 +40,7 @@ const INITIAL_ITEMS: PostItItem[] = [
     category: "할 일",
     color: POSTIT_COLORS[0],
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    state: "active",
   },
   {
     id: "sample-2",
@@ -47,6 +48,7 @@ const INITIAL_ITEMS: PostItItem[] = [
     category: "아이디어",
     color: POSTIT_COLORS[1],
     createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+    state: "active",
   },
   {
     id: "sample-3",
@@ -54,6 +56,7 @@ const INITIAL_ITEMS: PostItItem[] = [
     category: "기타",
     color: POSTIT_COLORS[2],
     createdAt: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
+    state: "completed",
   },
   {
     id: "sample-4",
@@ -61,6 +64,7 @@ const INITIAL_ITEMS: PostItItem[] = [
     category: "할 일",
     color: POSTIT_COLORS[3],
     createdAt: new Date().toISOString(),
+    state: "active",
   },
 ];
 
@@ -182,6 +186,29 @@ export default function Home() {
         await updateSheetItem(scriptUrl, id, { content: newContent });
       } catch (e) {
         console.error("Failed to update on Google Sheet", e);
+      }
+    }
+  };
+
+  // [Toggle Complete] 메모 완료 상태 토글
+  const handleToggleComplete = async (id: string) => {
+    let targetState: "active" | "completed" = "active";
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          const nextState = item.state === "completed" ? "active" : "completed";
+          targetState = nextState;
+          return { ...item, state: nextState };
+        }
+        return item;
+      })
+    );
+
+    if (scriptUrl) {
+      try {
+        await updateSheetItem(scriptUrl, id, { state: targetState });
+      } catch (e) {
+        console.error("Failed to update completed state on Google Sheet", e);
       }
     }
   };
@@ -361,6 +388,7 @@ export default function Home() {
                         item={item}
                         onDelete={handleDeleteItem}
                         onUpdate={handleUpdateItem}
+                        onToggleComplete={handleToggleComplete}
                       />
                     ))}
                   </AnimatePresence>
